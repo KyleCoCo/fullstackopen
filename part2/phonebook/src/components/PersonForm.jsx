@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import phoneService from './PhoneBooks'
 
 const PersonForm = ({newPerson, setNewPerson, persons, setPersons}) => {
   const handleNameChange = (event) => {
@@ -32,18 +33,42 @@ const PersonForm = ({newPerson, setNewPerson, persons, setPersons}) => {
     for (let i = 0; i < persons.length; i++) {
       console.log(persons[i])
       if(persons[i].name === trimNewName) {
-        alert(`${trimNewName} is already added to phonebook`)
+        if(window.confirm(`${trimNewName} is already added to phonebook, replace the old number with a new one?`)) {
+          personObject.id = persons[i].id
+          phoneService.update(personObject)
+          .then(response => {
+            console.log('response: ', response)
+            setPersons(persons.map(p => p.name === trimNewName ? response : p))
+            setNewPerson(
+              {
+                name: '',
+                number: ''
+              }
+            )
+          })
+          .catch(error => {
+            console.log("Error in repleacing the person number", error)
+          })
+        } 
         return
       }
     }
-    setPersons(persons.concat(personObject))
-    console.log(persons)
-    setNewPerson(
-      {
-        name: '',
-        number: ''
-      }
-    )
+    phoneService.create(personObject)
+    .then(response => {
+      setPersons(persons.concat(response))
+      console.log(persons)
+      setNewPerson(
+        {
+          name: '',
+          number: ''
+        }
+      )
+    })
+    .catch(error => {
+      console.log('error in create a new person', error)
+    })
+    
+    
   }
 
   return (

@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-
+import phoneService from './components/PhoneBooks'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -16,12 +15,10 @@ const App = () => {
   )
 
   const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://bitcoin.linkpc.net:3000/persons')
+    phoneService
+      .getAll()
       .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+        setPersons(response)
       })
   }
   
@@ -34,7 +31,7 @@ const App = () => {
       <h2>add a new</h2>
       <PersonForm newPerson={newPerson} setNewPerson={setNewPerson} persons={persons} setPersons={setPersons} />
       <h2>Numbers</h2>
-      <Persons persons={persons} filterName={filterName}/>
+      <Persons persons={persons} filterName={filterName} setPersons={setPersons}/>
     </div>
   )
 }
