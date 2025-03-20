@@ -8,7 +8,7 @@ const Delete = ({persons, person, setPersons, setNotification}) => {
       phoneService.deleteOne(person.id)
       .then(id => {
         console.log("delete success")
-        setPersons(persons.filter(p => p.id != person.id))
+        setPersons(persons.filter(p => p.id !== person.id))
         console.log("setPersons success")
       })
       .catch(error => {
@@ -34,14 +34,14 @@ const Delete = ({persons, person, setPersons, setNotification}) => {
 }
 
 const Persons = ({filterName, persons, setPersons, setNotification}) => {
-  const personsToShow = filterName.length == 0
+  const personsToShow = filterName.length === 0
     ? persons
     : persons.filter(p => p.name.toLowerCase().indexOf(filterName.toLowerCase()) != -1)
-
+ 
   return (
     <>
-    {personsToShow.map((person, index) => 
-      <div key={index}>{person.name} {person.number} <Delete person={person} persons={persons} setPersons={setPersons} setNotification={setNotification} /></div>)}
+    {personsToShow.map((person) => 
+      <div key={person.id}>{person.name} {person.number} <Delete person={person} persons={persons} setPersons={setPersons} setNotification={setNotification} /></div>)}
     </>
   )
 }
