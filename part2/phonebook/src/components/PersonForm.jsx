@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import phoneService from './PhoneBooks'
 
-const PersonForm = ({newPerson, setNewPerson, persons, setPersons}) => {
+const PersonForm = ({newPerson, setNewPerson, persons, setPersons, setNotification}) => {
   const handleNameChange = (event) => {
     console.log(event.target.value)
     const copyNewPerson = {...newPerson}
@@ -45,6 +45,12 @@ const PersonForm = ({newPerson, setNewPerson, persons, setPersons}) => {
                 number: ''
               }
             )
+            setNotification(
+              {message: `Updated ${trimNewName}'s number`}
+            )
+            setTimeout(() => {
+              setNotification(null)
+            }, 5000)
           })
           .catch(error => {
             console.log("Error in repleacing the person number", error)
@@ -63,6 +69,12 @@ const PersonForm = ({newPerson, setNewPerson, persons, setPersons}) => {
           number: ''
         }
       )
+      setNotification(
+        {message: `Added ${response.name}`}
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     })
     .catch(error => {
       console.log('error in create a new person', error)

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import phoneService from './PhoneBooks'
 
 
-const Delete = ({persons, person, setPersons}) => {
+const Delete = ({persons, person, setPersons, setNotification}) => {
   const handleDelete = () => {
     if (window.confirm(`Delete ${person.name}?`)) {
       phoneService.deleteOne(person.id)
@@ -12,6 +12,15 @@ const Delete = ({persons, person, setPersons}) => {
         console.log("setPersons success")
       })
       .catch(error => {
+        setNotification(
+          {
+            message: `Information of ${person.name} has already been removed from server`,
+            type: 'Error'
+          }
+        )
+        setTimeout(() => {
+          setNotification(null)
+        }, 5000)
         console.log(`${person.id} not existed, delete failed`, error)
       })
     }
@@ -24,7 +33,7 @@ const Delete = ({persons, person, setPersons}) => {
   )
 }
 
-const Persons = ({filterName, persons, setPersons}) => {
+const Persons = ({filterName, persons, setPersons, setNotification}) => {
   const personsToShow = filterName.length == 0
     ? persons
     : persons.filter(p => p.name.toLowerCase().indexOf(filterName.toLowerCase()) != -1)
@@ -32,7 +41,7 @@ const Persons = ({filterName, persons, setPersons}) => {
   return (
     <>
     {personsToShow.map((person, index) => 
-      <div key={index}>{person.name} {person.number} <Delete person={person} persons={persons} setPersons={setPersons} /></div>)}
+      <div key={index}>{person.name} {person.number} <Delete person={person} persons={persons} setPersons={setPersons} setNotification={setNotification} /></div>)}
     </>
   )
 }

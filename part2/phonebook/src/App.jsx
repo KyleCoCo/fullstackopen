@@ -1,6 +1,8 @@
+import './index.css'
 import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 import Persons from './components/Persons'
 import phoneService from './components/PhoneBooks'
 
@@ -13,6 +15,10 @@ const App = () => {
       number: '086-123456'
     }
   )
+  const [notification, setNotification] = useState({
+    message: null,
+    style: null
+  })
 
   const hook = () => {
     phoneService
@@ -27,11 +33,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification notification={notification} />
       <Filter filterName={filterName} setFilterName={setFilterName} />
       <h2>add a new</h2>
-      <PersonForm newPerson={newPerson} setNewPerson={setNewPerson} persons={persons} setPersons={setPersons} />
+      <PersonForm newPerson={newPerson} setNewPerson={setNewPerson} persons={persons} setPersons={setPersons} setNotification={setNotification} />
       <h2>Numbers</h2>
-      <Persons persons={persons} filterName={filterName} setPersons={setPersons}/>
+      <Persons persons={persons} filterName={filterName} setPersons={setPersons} setNotification={setNotification} />
     </div>
   )
 }
