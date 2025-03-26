@@ -24,7 +24,9 @@ let persons = [
       "number": "39-23-6423122"
     }
 ]
-
+// whenever Express gets an HTTP GET request it will first check 
+// if the dist directory contains a file corresponding to the request's address. If a correct file is found, Express will return it.
+app.use(express.static('dist'))
 app.use(express.json())
 // Custom format for morgan to log POST data
 morgan.token('post-data', (req, res) => {
@@ -34,7 +36,8 @@ morgan.token('post-data', (req, res) => {
   
 // Use morgan with a custom format
 app.use(morgan(':method :url :status :response-time ms :post-data'));
-  
+const cors = require('cors')
+app.use(cors())
 
 
 app.get('/api/persons', (request, response) => {
@@ -97,7 +100,7 @@ app.get('/info', (request, response) => {
 })
 
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
