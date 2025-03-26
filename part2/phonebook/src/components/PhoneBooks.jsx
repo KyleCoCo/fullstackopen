@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const base_url = "http://bitcoin.linkpc.net:3000/persons"
+const base_url = "/api/persons"
 
 const getAll = () => {
     return axios
