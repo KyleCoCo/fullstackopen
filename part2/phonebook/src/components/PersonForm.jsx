@@ -78,6 +78,15 @@ const PersonForm = ({newPerson, setNewPerson, persons, setPersons, setNotificati
     })
     .catch(error => {
       console.log('error in create a new person', error)
+      setNotification(
+        {
+          message: `${error.response.data.error}`,
+          type: 'Error'
+        }
+      )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000)
     })
     
     

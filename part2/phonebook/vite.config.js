@@ -7,8 +7,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://bitcoin.linkpc.net:3000'
-      }
+        target: 'http://bitcoin.linkpc.net:3000',
+        changeOrigin: true,
+      },
     }
-  }
+  },
 })

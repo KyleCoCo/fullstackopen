@@ -18,7 +18,7 @@ POST http://bitcoin.linkpc.net:3000/api/persons HTTP/1.1
 content-type: application/json
 
 {
-    "name": "police station",
+    "name": "po",
     "number": "010-1001001111"
 }
 
