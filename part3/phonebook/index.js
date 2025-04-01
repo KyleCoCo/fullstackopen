@@ -61,7 +61,8 @@ app.put('/api/persons/:id', (request, response, next) => {
         person.name = body.name
         person.number = body.number
 
-        return person.save().then(result => {
+        return person.save()
+        .then(result => {
             console.log(`updated ${person.id} ${person.name} number ${person.number} to phonebook`)
             response.json(person)
         })

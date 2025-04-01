@@ -54,6 +54,15 @@ const PersonForm = ({newPerson, setNewPerson, persons, setPersons, setNotificati
           })
           .catch(error => {
             console.log("Error in repleacing the person number", error)
+            setNotification(
+              {
+                message: `${error.response.data.error}`,
+                type: 'Error'
+              }
+            )
+            setTimeout(() => {
+              setNotification(null)
+            }, 5000)
           })
         } 
         return
